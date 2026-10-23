@@ -1,0 +1,259 @@
+/* Une palette d'interface par fond : light ou dark. */
+#rsf-map-app {
+  --rsf-surface: #fff;
+  --rsf-control: #fff;
+  --rsf-hover: #f0f1f3;
+  --rsf-text: #16161b;
+  --rsf-muted: #5c6068;
+  --rsf-border: #d8dbe0;
+  --rsf-track: #eceef1;
+  --rsf-accent: #b60038;
+  --rsf-active-bg: #f9e6ed;
+  --rsf-active-text: #8d002c;
+  --rsf-link: #9f0031;
+  color-scheme: light;
+}
+
+#rsf-map-app.theme-dark {
+  --rsf-surface: #101014;
+  --rsf-control: #1b1b22;
+  --rsf-hover: #292932;
+  --rsf-text: #f5f5f7;
+  --rsf-muted: #c5c7cf;
+  --rsf-border: #44444e;
+  --rsf-track: #30303a;
+  --rsf-active-bg: #5a1730;
+  --rsf-active-text: #fff;
+  --rsf-link: #ff91b3;
+  color-scheme: dark;
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .rsf-cartography-card, .credits-card, .tutorial-card,
+  .occ-legend-control, .geojson-levels-control) {
+  --bg-0: var(--rsf-surface);
+  --bg-1: var(--rsf-surface);
+  --bg-2: var(--rsf-control);
+  --bg-3: var(--rsf-control);
+  --text-0: var(--rsf-text);
+  --text-1: var(--rsf-muted);
+  --text-2: var(--rsf-muted);
+  --border-0: var(--rsf-border);
+  --border-1: var(--rsf-border);
+  --search-frame-color: var(--rsf-muted);
+  background: var(--rsf-surface);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+  color-scheme: inherit;
+  backdrop-filter: none;
+  opacity: 1;
+}
+
+#rsf-map-app :is(#event-header, #event-footer, #country-header, #country-footer,
+  #country-chart-tabs, #right-panel-legend, #authors-panel-legend, #bottom-chart-legend,
+  .bottom-chart-header, .event-card, .event-item, .event-footer-note-wrap,
+  .country-footer-credits, .rsf-cartography-link, .rsf-cartography-link span,
+  .credits-header, .credits-body) {
+  background: var(--rsf-surface);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+  backdrop-filter: none;
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .rsf-cartography-card, .credits-card, .tutorial-card)
+  :is(h1, h2, h3, h4, p, span, label, .chart-bar-label, .chart-bar-value,
+  .event-section-title, .right-section-title, .legend-row-title) {
+  color: var(--rsf-text);
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .rsf-cartography-card, .credits-card, .tutorial-card) a {
+  color: var(--rsf-link);
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .rsf-cartography-card, .credits-card, .tutorial-card)
+  :is(button, select, input, .search-box, .lieu-dropdown, .language-toggle,
+  .title-date-control, .focus-toggle, .event-readmore-btn) {
+  background: var(--rsf-control);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+  color-scheme: inherit;
+  box-shadow: none;
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .tutorial-card) button:is(:hover, :focus-visible) {
+  background: var(--rsf-hover);
+  color: var(--rsf-text);
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel, .tutorial-card) button:is(.active, .is-active, [aria-pressed="true"]) {
+  background: var(--rsf-active-bg);
+  border-color: var(--rsf-accent);
+  color: var(--rsf-active-text);
+}
+
+#rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
+  #utility-menu-panel) button:is(.active, .is-active, [aria-pressed="true"]) span {
+  color: inherit;
+}
+
+#rsf-map-app :is(#floating-controls, #app-topbar, #map-title-panel) :is(select:disabled, #ville-select.is-muted) {
+  background: var(--rsf-hover);
+  border-color: var(--rsf-border);
+  color: var(--rsf-muted);
+}
+
+#rsf-map-app :is(#floating-controls, #app-topbar, #map-title-panel) .title-date-input {
+  background: transparent;
+  color: transparent;
+  color-scheme: inherit;
+}
+
+#rsf-map-app :is(#country-panel, #event-panel) .chart-bar {
+  background: var(--rsf-track);
+}
+
+#rsf-map-app :is(#floating-controls, #app-topbar, #map-title-panel) .header-legend-item {
+  background: var(--rsf-control);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+}
+
+#rsf-map-app :is(#event-panel, #country-panel) input::placeholder {
+  color: var(--rsf-muted);
+  opacity: 1;
+}
+
+#rsf-map-app .map-title-panel.collapsed:not(:hover):not(:focus-within) {
+  background: var(--rsf-surface);
+  opacity: 1;
+}
+
+#rsf-map-app.theme-dark #map-title-toggle img { filter: brightness(0) invert(1); }
+
+/* Un support clair conserve les couleurs et les traits noirs des pictogrammes. */
+#rsf-map-app.theme-dark :is(.marker-icon, img.leaflet-marker-icon, .header-legend-icon, .event-icon,
+  #right-panel-legend img, #bottom-chart-legend img) {
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px #fff, 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+#rsf-map-app.theme-dark .marker-icon {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 0 2px #fff, 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
+#rsf-map-app.theme-dark :is(.header-legend-icon, .event-icon, #right-panel-legend img, #bottom-chart-legend img) {
+  object-fit: contain;
+  padding: 1px;
+  box-sizing: border-box;
+}
+
+#rsf-map-app.theme-dark .header-legend-icon {
+  width: 18px;
+  height: 18px;
+}
+
+#rsf-map-app.theme-dark :is(.custom-cluster, .custom-cluster span) { color: #fff; }
+#rsf-map-app.theme-dark .custom-cluster {
+  border-color: #f5f5f7;
+  box-shadow: 0 0 0 1px #f5f5f7, 0 2px 7px rgba(0, 0, 0, 0.7);
+}
+#rsf-map-app.theme-dark .leaflet-control-layers-toggle { filter: brightness(0) invert(1); }
+
+/* Le bouton, l'état ouvert et l'attribut hidden restent synchronisés. */
+#rsf-map-app #utility-menu #utility-menu-toggle {
+  background: var(--rsf-control);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+  opacity: 1;
+  box-shadow: none;
+}
+
+#rsf-map-app #utility-menu:is(.open, :hover, :focus-within) #utility-menu-toggle {
+  background: var(--rsf-accent);
+  border-color: var(--rsf-accent);
+  color: #fff;
+}
+
+#rsf-map-app #utility-menu #utility-menu-panel[hidden],
+#rsf-map-app #utility-menu:not(.open) #utility-menu-panel {
+  display: none !important;
+}
+
+#rsf-map-app #utility-menu.open #utility-menu-panel:not([hidden]) {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  max-height: calc(100dvh - 145px);
+  overflow-y: auto;
+  background: var(--rsf-surface);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+}
+
+#rsf-map-app #utility-menu-panel :is(.utility-menu-item, #tutorial-replay-btn, #rsf-cartography-toggle) {
+  background: var(--rsf-control);
+  color: var(--rsf-text);
+  border-color: var(--rsf-border);
+  opacity: 1;
+}
+
+#rsf-map-app #utility-menu-panel :is(.utility-menu-item, #tutorial-replay-btn, #rsf-cartography-toggle):is(:hover, :focus-visible) {
+  background: var(--rsf-hover);
+  color: var(--rsf-text);
+}
+
+#rsf-map-app #utility-menu-panel :is(.utility-menu-item, #tutorial-replay-btn, #rsf-cartography-toggle):is(.active, .is-active, [aria-pressed="true"]) {
+  background: var(--rsf-active-bg);
+  border-color: var(--rsf-accent);
+  color: var(--rsf-active-text);
+}
+
+#rsf-map-app :is(.leaflet-control-layers, .leaflet-bar a, .leaflet-control-attribution) {
+  background-color: var(--rsf-surface);
+  color: var(--rsf-text);
+  border-color: var(--rsf-border);
+}
+
+#rsf-map-app .leaflet-control-layers label { color: var(--rsf-text); }
+#rsf-map-app .leaflet-control-layers-expanded { max-height: calc(100dvh - 32px); overflow-y: auto; }
+#rsf-map-app .leaflet-control-attribution a { color: var(--rsf-link); }
+#rsf-map-app input[type="radio"] { accent-color: var(--rsf-accent); }
+
+/* Garder le choix des fonds accessible quand un panneau latéral est ouvert. */
+@media (min-width: 960px) {
+  #rsf-map-app:has(#country-panel.expanded, #event-panel.expanded) .leaflet-bottom.leaflet-right {
+    right: 380px;
+  }
+  #rsf-map-app:has(#country-panel.expanded, #event-panel.expanded) #bottom-chart-panel {
+    width: calc(100% - 380px);
+    right: 380px;
+  }
+}
+
+#rsf-map-app :is(.bottom-tooltip, .bottom-chart-tooltip, .chart-label-tooltip,
+  .regions-choropleth-tooltip, .leaflet-popup-content-wrapper, .leaflet-popup-tip) {
+  background: var(--rsf-surface);
+  border-color: var(--rsf-border);
+  color: var(--rsf-text);
+}
+
+#rsf-map-app :is(#loading-overlay, .loading-box) {
+  background: var(--rsf-surface);
+  color: var(--rsf-text);
+}
+#rsf-map-app :is(.loading-title, .loading-subtitle, .loading-subtext) { color: var(--rsf-text); }
+
+#rsf-map-app .event-item.highlighted { animation: rsf-event-highlight 0.8s ease-in-out 2; }
+@keyframes rsf-event-highlight {
+  0%, 50%, 100% { background-color: var(--rsf-surface); }
+  25%, 75% { background-color: var(--rsf-active-bg); }
+}

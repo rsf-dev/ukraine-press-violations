@@ -1,0 +1,61 @@
+.panel-scroll-region {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+}
+
+.panel-scroll-region > #country-content,
+.panel-scroll-region > #event-list {
+  min-height: 0;
+  scrollbar-width: none;
+}
+
+.panel-scroll-region > #country-content::-webkit-scrollbar,
+.panel-scroll-region > #event-list::-webkit-scrollbar {
+  display: none;
+}
+
+.panel-scroll-progress {
+  position: absolute;
+  top: 6px;
+  right: 1px;
+  bottom: 6px;
+  z-index: 3;
+  width: 12px;
+  cursor: pointer;
+  touch-action: none;
+}
+
+.panel-scroll-progress[hidden] {
+  display: none;
+}
+
+.panel-scroll-progress::before,
+.panel-scroll-progress::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+
+.panel-scroll-progress::before {
+  background: rgba(228, 0, 70, 0.12);
+}
+
+.panel-scroll-progress::after {
+  background: #e40046;
+  transform: translateX(-50%) scaleY(var(--scroll-progress, 0));
+  transform-origin: top;
+}
+
+.panel-scroll-progress:focus-visible {
+  outline: 1px solid #e40046;
+  outline-offset: 1px;
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "Oblast": "Zaporijjia",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Zaporizhia Oblast"
+  },
+  {
+    "Oblast": "Kharkiv",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Kharkiv Oblast"
+  },
+  {
+    "Oblast": "Louhansk",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Luhansk Oblast"
+  },
+  {
+    "Oblast": "Kherson",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Kherson Oblast"
+  },
+  {
+    "Oblast": "Donetsk",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Donetsk Oblast"
+  },
+  {
+    "Oblast": "Dnipropetrovsk",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Dnipropetrovsk Oblast"
+  },
+  {
+    "Oblast": "Crimée",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Autonomous Republic of Crimea"
+  },
+  {
+    "Oblast": "Sébastopol",
+    "Statut": "Partiellement ou totalement occupé",
+    "Statut_en": "Partially or fully occupied",
+    "Geojson": "Sevastopol"
+  }
+]
