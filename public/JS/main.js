@@ -23,6 +23,7 @@ async function importV(path) {
   return mod;
 }
 
+const { fetchResponse: fetch, validateEvents, parseCoordinate } = await importV("./utils/data.js");
 const { REGLAGES, validerReglages } = await importV("./reglages.js");
 validerReglages();
 const MODULES = REGLAGES.fichiers.modules;
@@ -45,7 +46,7 @@ const {
 } = dates;
 
 const { normalizeType } = strings;
-const { escapeHtml } = security;
+const { escapeHtml, getSafeHttpUrl } = security;
 
 const { BottomChart } = bottomChart;
 const { EventsRenderer } = eventsRenderer;
@@ -100,11 +101,11 @@ const OCCUPATION_TYPES = REGLAGES.occupation.types;
 
 
 
-const TYPE_COLORS = Object.fromEntries(REGLAGES.categories.map(category => [category.cle, category.couleur]));
-const TYPE_CONFIG = Object.fromEntries(REGLAGES.categories.map(category => [category.cle, { slug: category.slug, file: category.icone }]));
-const TYPE_MAP_EN_TO_FR = Object.fromEntries(REGLAGES.categories.flatMap(category =>
+const TYPE_COLORS = Object.assign(Object.create(null), Object.fromEntries(REGLAGES.categories.map(category => [category.cle, category.couleur])));
+const TYPE_CONFIG = Object.assign(Object.create(null), Object.fromEntries(REGLAGES.categories.map(category => [category.cle, { slug: category.slug, file: category.icone }])));
+const TYPE_MAP_EN_TO_FR = Object.assign(Object.create(null), Object.fromEntries(REGLAGES.categories.flatMap(category =>
   category.valeursEntree.filter(value => value !== category.cle).map(value => [value, category.cle])
-));
+)));
 
 function getDisplayLabelForType(type, lang = currentLang) {
   const category = REGLAGES.categories.find(item => item.cle === type);
@@ -175,14 +176,15 @@ function setupCollapse({ btnId, bodyId, storageKey = null, defaultCollapsed = fa
 
   const load = () => {
     if (!storageKey) return defaultCollapsed;
-    const v = localStorage.getItem(storageKey);
-    if (v === null) return defaultCollapsed;
-    return v === "1";
+    try {
+      const v = localStorage.getItem(storageKey);
+      return v === null ? defaultCollapsed : v === "1";
+    } catch { return defaultCollapsed; }
   };
 
   const save = (isCollapsed) => {
     if (!storageKey) return;
-    localStorage.setItem(storageKey, isCollapsed ? "1" : "0");
+    try { localStorage.setItem(storageKey, isCollapsed ? "1" : "0"); } catch { /* Stockage désactivé dans certains contextes intégrés. */ }
   };
 
   const apply = (isCollapsed) => {
@@ -202,6 +204,7 @@ function setupCollapse({ btnId, bodyId, storageKey = null, defaultCollapsed = fa
     apply(collapsed);
   });
 }
+
 
 
 function getTypeSlugFromCategory(category) {
@@ -239,8 +242,8 @@ function normalizeConfiguredEvent(event) {
     type_violence: pick("categorie") ?? event.type_violence,
     oblast: pick("zone") ?? event.oblast ?? event.Oblast,
     geojson: pick("nomGeojson") ?? event.geojson ?? event.Geojson,
-    lat: Number(pick("latitude") ?? event.lat),
-    lng: Number(pick("longitude") ?? event.lng),
+    lat: parseCoordinate(pick("latitude") ?? event.lat, 90),
+    lng: parseCoordinate(pick("longitude") ?? event.lng, 180),
     compteur_evenements: pick("identifiant") ?? event.compteur_evenements,
     lien: pick("lien") ?? event.lien
   };
@@ -263,7 +266,7 @@ function getFeatureShapeName(feature) {
 function getOblastDisplayNameForShape(shapeName) {
   if (!shapeName) return null;
   const ev = (allEvents || []).find(item => getEventGeojsonName(item) === shapeName);
-  return ev ? getEventOblast(ev) : shapeName;
+  return ev ? getEventOblast(ev) : REGLAGES.zones?.labels?.[shapeName]?.[currentLang] || shapeName;
 }
 
 function hexToRgb(hex) {
@@ -477,8 +480,11 @@ function createMarkerIcon(type) {
   const cfg = TYPE_CONFIG[type];
   if (!cfg) return L.icon({ iconUrl: DEFAULT_ICON_URL, iconSize: [24, 24] });
 
+  const element = document.createElement("div");
+  element.className = "marker-icon marker-" + normalizeType(cfg.slug);
+  element.style.backgroundImage = "url(" + JSON.stringify(iconUrl(cfg.file)) + ")";
   return L.divIcon({
-    html: `<div class="marker-icon marker-${cfg.slug}" style="background-image:url('${iconUrl(cfg.file)}')"></div>`,
+    html: element,
     className: "",
     iconSize: [36, 36],
     popupAnchor: [0, -12]
@@ -975,7 +981,7 @@ function buildStackedCountsByGroup({ groupBy, onlyOblast = null, startTime = nul
   const allCats = Object.keys(TYPE_CONFIG);
   const keyFn = (ev) => (groupBy === "villes" ? ev.lieu || null : getEventOblast(ev) || null);
 
-  const counts = {};
+  const counts = Object.create(null);
   for (const ev of allEvents) {
     if (onlyOblast && getEventOblast(ev) !== onlyOblast) continue;
 
@@ -989,7 +995,7 @@ function buildStackedCountsByGroup({ groupBy, onlyOblast = null, startTime = nul
     if (!rightPanelVisibleTypes.has(type)) continue;
 
     if (!counts[g]) {
-      counts[g] = {};
+      counts[g] = Object.create(null);
       for (const cat of allCats) counts[g][cat] = 0;
     }
     counts[g][type] += 1;
@@ -1673,7 +1679,9 @@ function applyConfiguredControls() {
   document.querySelectorAll(".rsf-cartography-link").forEach((link, index) => {
     const card = REGLAGES.cartesLiees[index];
     if (!card) return;
-    link.href = card.href;
+    const safeHref = getSafeHttpUrl(card.href);
+    if (safeHref) link.href = safeHref;
+    else { link.removeAttribute("href"); link.hidden = true; }
     const image = link.querySelector("img");
     if (image) image.src = withV(card.image);
   });
@@ -1958,7 +1966,7 @@ async function loadEventsForLang(lang) {
   if (!base) throw new Error(`Fichier de données manquant pour la langue : ${lang}`);
   const resp = await fetch(withV(base));
   if (!resp.ok) throw new Error(`Événements ${lang} : HTTP ${resp.status}`);
-  const data = (await resp.json()).map(normalizeConfiguredEvent);
+  const data = validateEvents(await resp.json(), REGLAGES.champsDonnees).map(normalizeConfiguredEvent);
 
   if (lang === "en") {
     data.forEach(ev => {

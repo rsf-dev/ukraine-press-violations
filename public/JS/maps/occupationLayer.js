@@ -1,3 +1,4 @@
+import { fetchResponse as fetch } from "../utils/data.js";
 // maps/occupationLayer.js
 
 export function createOccupationLayerController({

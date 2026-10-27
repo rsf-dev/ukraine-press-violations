@@ -1,0 +1,159 @@
+{
+  "reviewed": "2026-10-27",
+  "files": [
+    {
+      "file": "leaflet-1.9.4/leaflet.js",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
+      "sha256": "sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=",
+      "integrity": "sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH",
+      "bytes": 147552
+    },
+    {
+      "file": "leaflet-1.9.4/leaflet.css",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css",
+      "sha256": "sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=",
+      "integrity": "sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H",
+      "bytes": 14806
+    },
+    {
+      "file": "leaflet-1.9.4/images/layers.png",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/images/layers.png",
+      "sha256": "sha256-Hbvp0CjikvNvy6j4s6KNXokydU/CIVuaxp5M3s9RB8Y=",
+      "integrity": "sha384-80x85ZS+G189o0xL8E8D7BnfhuNss6EwUPHzG7e+qByRD2xnpxikZ6UQU4Re5nNy",
+      "bytes": 696
+    },
+    {
+      "file": "leaflet-1.9.4/images/layers-2x.png",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/images/layers-2x.png",
+      "sha256": "sha256-Bm2sqFDY/77wB68AsG6sABVyje4nnFHzy2xxbffELt8=",
+      "integrity": "sha384-+F2ZWK/HTpkV9kN2HnMGCQOTM/cnQJLs770FLOeHznwVWRfDESI8z4JwcGYmy2Au",
+      "bytes": 1259
+    },
+    {
+      "file": "leaflet-1.9.4/images/marker-icon.png",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+      "sha256": "sha256-V0w6XMqF9BFAhbaEFZbWLwDXyJLHsD8oy/owHesdxDc=",
+      "integrity": "sha384-wg83fCOXjBtqzFAWhTL9Sd9vmLUNhfEEzfmNUX9zwv2igKlz/YQbdapF4ObdxF+R",
+      "bytes": 1466
+    },
+    {
+      "file": "leaflet-1.9.4/images/marker-icon-2x.png",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+      "sha256": "sha256-ABecTB7oMNOhCEEq4NKU9Vd2z+sIXGASmjmqb8SuJSg=",
+      "integrity": "sha384-bDEa1RhAAKIr/VQnMZ7gUhhXwmKYB4V0g8AsxOvCEPwGxfHCUEzAEMAEEzkjuxiA",
+      "bytes": 2464
+    },
+    {
+      "file": "leaflet-1.9.4/images/marker-shadow.png",
+      "source": "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+      "sha256": "sha256-Jk9cZAM58ELdcpBiz8BMF/jqDymIK1OOOEjtjxDttNo=",
+      "integrity": "sha384-dB8ivfvPGb1MSIzX8oWTakCxmq+VwqP/QL1TX4jT4INR3pM5T4FgF3Gx4mN3NTMq",
+      "bytes": 618
+    },
+    {
+      "file": "leaflet-1.9.4/LICENSE",
+      "source": "https://unpkg.com/leaflet@1.9.4/LICENSE",
+      "sha256": "sha256-U+jcJYYgFOQyR0HKGPvjYR4R1C72n1n4bqjFOJZH1Ms=",
+      "integrity": "sha384-CXYK4I2izUBQWizu8sKhYyBLtabBOMnWJhiEcYE2hnY+ov3P+/NGnAkucH4hN0hK",
+      "bytes": 1395
+    },
+    {
+      "file": "markercluster-1.5.3/leaflet.markercluster.js",
+      "source": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js",
+      "sha256": "sha256-Hk4dIpcqOSb0hZjgyvFOP+cEmDXUKKNE/tT542ZbNQg=",
+      "integrity": "sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr",
+      "bytes": 34136
+    },
+    {
+      "file": "markercluster-1.5.3/MarkerCluster.css",
+      "source": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css",
+      "sha256": "sha256-YU3qCpj/P06tdPBJGPax0bm6Q1wltfwjsho5TR4+TYc=",
+      "integrity": "sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV",
+      "bytes": 872
+    },
+    {
+      "file": "markercluster-1.5.3/MarkerCluster.Default.css",
+      "source": "https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css",
+      "sha256": "sha256-YSWCMtmNZNwqex4CEw1nQhvFub2lmU7vcCKP+XVwwXA=",
+      "integrity": "sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+",
+      "bytes": 1287
+    },
+    {
+      "file": "markercluster-1.5.3/LICENSE",
+      "source": "https://unpkg.com/leaflet.markercluster@1.5.3/MIT-LICENCE.txt",
+      "sha256": "sha256-MTPazTglC9H1JNgWbMYKAWo4JSLgYvzhQ2kcZb9eSz0=",
+      "integrity": "sha384-IMk3JWZsFB2PXN9WM/8kuS/uHhX8W5umZzxuYWgF5MBsRZcUnst+49PrkyV9Lq2p",
+      "bytes": 1052
+    },
+    {
+      "file": "maplibre-6.15.0/maplibre-gl.mjs",
+      "source": "https://unpkg.com/maplibre-gl@6.15.0/dist/maplibre-gl.mjs",
+      "sha256": "sha256-QRmLI2eafYiSGDQIu+8uq9x0dFvrkCYfa+D2YLeusv0=",
+      "integrity": "sha384-f3IomKpQJ9QgLFg9JJeeIXKzhYFCZFLXDs4FbQLY13Y1uiaEctrT8RHbumCfpsAc",
+      "bytes": 1098062
+    },
+    {
+      "file": "maplibre-6.15.0/maplibre-gl-worker.mjs",
+      "source": "https://unpkg.com/maplibre-gl@6.15.0/dist/maplibre-gl-worker.mjs",
+      "sha256": "sha256-HGkGY2gzGq5jln7SSpr/z5Ys9V/MbY9TKosED3NtvPo=",
+      "integrity": "sha384-bFMCdo+41ozOqjqQ5s+XmCW14ORz7o11KR04vuUouko65bE1KkGqbN3/z4wUS5Q4",
+      "bytes": 518806
+    },
+    {
+      "file": "maplibre-6.15.0/maplibre-gl.css",
+      "source": "https://unpkg.com/maplibre-gl@6.15.0/dist/maplibre-gl.css",
+      "sha256": "sha256-qQeYoZUwF3kOWQ9+G9Nf8QOopCY5cstHKQt4rfhvjCA=",
+      "integrity": "sha384-S+OnE5M4U3Qc2nR0RgljGrVs06xqfRg8L7uFk/pOF5+sRuSDG4oKkqKZmFrx7w09",
+      "bytes": 71596
+    },
+    {
+      "file": "maplibre-6.15.0/LICENSE",
+      "source": "https://unpkg.com/maplibre-gl@6.15.0/LICENSE.txt",
+      "sha256": "sha256-7l/AWgZ36vaWAdLH2w2ezWzCfDq8HQczvJ7TRwfPjvI=",
+      "integrity": "sha384-3Zf/f+K0L6bn+JFiUedpEU79XsEmWDOSzj/+j17JomfRWmlkO60ByjZbpgZkeRiL",
+      "bytes": 5984
+    },
+    {
+      "file": "maplibre-leaflet-0.1.4/leaflet-maplibre-gl.js",
+      "source": "https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js",
+      "sha256": "sha256-Hmz4yz61/ZCYeaob82o4P7UGyaWy27+rq85lopTdH8s=",
+      "integrity": "sha384-tXYNKOHx4T02jMP7YYCtBxPIv1B5gaA5mcVPBzqMp6d7VzWzxJgI2aWF/nJLrQdS",
+      "bytes": 9296
+    },
+    {
+      "file": "maplibre-leaflet-0.1.4/LICENSE",
+      "source": "https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/LICENSE",
+      "sha256": "sha256-6qchuhWMvv9HrVOxA138Jv90TfZmYsk/9xXJiFGX6/M=",
+      "integrity": "sha384-ZANucta8lLmOx9fS13y0ax05EJlnkPwaKt4F98W9WAy5AYCzKk7y2idPgXem0ekj",
+      "bytes": 767
+    },
+    {
+      "file": "iframe-resizer-child-5.5.7/index.umd.js",
+      "source": "https://unpkg.com/@iframe-resizer/child@5.5.7/index.umd.js",
+      "sha256": "sha256-7wfuApVT6SD3JUMUIKCAGEgcjQWaj5pkM2yiIDhfCNQ=",
+      "integrity": "sha384-O+iwzOEtFPBNZ2EuuhvcOeBsvwP1/NCn7CTVQKU4dI5BgX6HCgynUzocV5Ib4gZw",
+      "bytes": 30852
+    },
+    {
+      "file": "iframe-resizer-child-5.5.7/LICENSE",
+      "source": "https://unpkg.com/@iframe-resizer/child@5.5.7/LICENSE",
+      "sha256": "sha256-GXPjgfVZ+/Y8KgnN1uQydar87pvwwmiciOD20s4Ai0c=",
+      "integrity": "sha384-ikSKXEUH9vs/aSuM4yQLsUS4iAay7ATSfHAeF4NDcexuZAw/EtaRSSliyJP+Sfro",
+      "bytes": 32206
+    },
+    {
+      "file": "electrolize/Electrolize-Regular.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/eb6920819856bfd01255afaf710a675a6168181d/ofl/electrolize/Electrolize-Regular.ttf",
+      "sha256": "sha256-qoGrkBX8AZC7XmjFApBWXHpKcj3fMriHdKr/Bc3Wa8o=",
+      "integrity": "sha384-GvQnBs7EMRCS/8rETTxcCEv0DqwwIZJzrLcVH8sdaQnPfZ5iVVzbtmUDJGPRvzjD",
+      "bytes": 55712
+    },
+    {
+      "file": "electrolize/OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/eb6920819856bfd01255afaf710a675a6168181d/ofl/electrolize/OFL.txt",
+      "sha256": "sha256-xJVd/hWl2xAyaqWO92dGDELNEqOs2z5pju4nBOs3PZQ=",
+      "integrity": "sha384-1uSsDs7w6TKpJGux622+I/5E1EBgpHstmrV1yVeRAthZ19Da3uHDVaq1y/JG6sCW",
+      "bytes": 4387
+    }
+  ]
+}

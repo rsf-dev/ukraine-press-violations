@@ -307,7 +307,7 @@ export const TYPE_LABELS = {
 
 export function getDisplayLabelForType(type, lang) {
   const dict = TYPE_LABELS[lang] || TYPE_LABELS.fr;
-  return dict[type] || type;
+  return Object.prototype.hasOwnProperty.call(dict, type) ? dict[type] : type;
 }
 
 export function applyStaticTextsForLang(lang) {

@@ -3,32 +3,33 @@
 
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://tiles.openfreemap.org https://server.arcgisonline.com; font-src 'self'; connect-src 'self' https://tiles.openfreemap.org https://server.arcgisonline.com; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <meta name="referrer" content="no-referrer">
   <meta name="robots" content="index, follow"> <!-- à changer à la publication -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ukraine : 4 ans de guerre contre les journalistes</title>
   <link rel="icon" type="image/vnd.icon" href="logo.svg?v=2026-10-07-reglages-uk3">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/fonts.css?v=2026-10-27-security-2">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="vendor/leaflet-1.9.4/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
+  <script src="vendor/leaflet-1.9.4/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
 
   <!-- OpenFreeMap via MapLibre dans Leaflet -->
-  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.9.0/dist/maplibre-gl.css" />
-  <script src="https://unpkg.com/maplibre-gl@5.9.0/dist/maplibre-gl.js"></script>
-  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.4/leaflet-maplibre-gl.js"></script>
+  <link rel="stylesheet" href="vendor/maplibre-6.15.0/maplibre-gl.css" integrity="sha384-S+OnE5M4U3Qc2nR0RgljGrVs06xqfRg8L7uFk/pOF5+sRuSDG4oKkqKZmFrx7w09" crossorigin="anonymous">
+  
+  <script src="vendor/leaflet-1.9.4/leaflet.js"></script>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
-  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <link rel="stylesheet" href="vendor/markercluster-1.5.3/MarkerCluster.css" integrity="sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV" crossorigin="anonymous">
+  <link rel="stylesheet" href="vendor/markercluster-1.5.3/MarkerCluster.Default.css" integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+" crossorigin="anonymous">
+  <script src="vendor/markercluster-1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="css/style.css?v=2026-10-22-icons-exil-1">
   <link rel="stylesheet" href="css/panelScroll.css?v=2026-10-12-scroll-v8">
-  <link rel="stylesheet" href="css/themes.css?v=2026-10-22-icons-exil-1">
+  <link rel="stylesheet" href="css/themes.css?v=2026-10-26-dark-actions-1">
   <link rel="stylesheet" href="css/nearbyNavigation.css?v=2026-10-22-nearby-nav-2">
-  <script type="module" src="JS/main.js?v=2026-10-22-nearby-nav-2"></script>
+  <script src="JS/embed.js?v=2026-10-27-security-2"></script>
+  <script type="module" src="JS/bootstrap.js?v=2026-10-27-regions-authors-1"></script>
 
 </head>
 
@@ -287,7 +288,7 @@
     </section>
   </div>
 
-  <script async src="https://cdn.jsdelivr.net/npm/@iframe-resizer/child@5.5.7"></script>
+  <script async src="vendor/iframe-resizer-child-5.5.7/index.umd.js" integrity="sha384-O+iwzOEtFPBNZ2EuuhvcOeBsvwP1/NCn7CTVQKU4dI5BgX6HCgynUzocV5Ib4gZw" crossorigin="anonymous"></script>
 
 
 </body>

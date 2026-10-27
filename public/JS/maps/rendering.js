@@ -27,16 +27,27 @@ export function applyBasemapTheme(fond, { document: page = globalThis.document }
   return theme;
 }
 
+export function secureMapRequest(value, baseUrl = globalThis.location.href) {
+  const base = new URL(baseUrl);
+  const url = new URL(value, base);
+  const allowedOrigins = new Set([base.origin, "https://tiles.openfreemap.org", "https://server.arcgisonline.com"]);
+  if (!["https:", "http:"].includes(url.protocol) || !allowedOrigins.has(url.origin) || url.username || url.password) {
+    throw new Error("Source cartographique non autorisée.");
+  }
+  // Les requêtes des workers ne reprennent pas toutes la politique du document.
+  return { url: url.href, credentials: "omit", referrerPolicy: "no-referrer" };
+}
+
 export function createBasemapLayer(fond, { L, settings }) {
   const url = String(fond.url).replaceAll("{apiKey}", encodeURIComponent(settings.cleCarto || ""));
   const attribution = fond.attribution || settings.attribution;
   const options = { ...(fond.options || {}) };
   if (fond.type === "raster") {
-    return L.tileLayer(url, { maxZoom: settings.zoomMaximum, attribution, ...options });
+    return L.tileLayer(url, { maxZoom: settings.zoomMaximum, attribution, ...options, crossOrigin: "anonymous", referrerPolicy: "no-referrer" });
   }
   if (typeof L.maplibreGL !== "function") throw new Error("Le plugin MapLibre GL Leaflet est requis pour OpenFreeMap.");
   const layer = L.maplibreGL({
-    style: url, attribution, interactive: false, updateInterval: 16, fadeDuration: 0, ...options
+    style: url, attribution, interactive: false, updateInterval: 16, fadeDuration: 0, ...options, attributionControl: false, transformRequest: value => secureMapRequest(value)
   });
   layer.getAttribution = () => attribution;
   return layer;

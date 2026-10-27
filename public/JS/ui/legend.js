@@ -109,7 +109,7 @@ export const LegendUI = (() => {
   function updateHeaderLegendCounts(visibleEvents) {
     const types = _getTypes();
 
-    const counts = {};
+    const counts = Object.create(null);
     visibleEvents.forEach(ev => {
       const t = ev.type_violence;
       counts[t] = (counts[t] || 0) + 1;

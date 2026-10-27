@@ -259,6 +259,38 @@ export const REGLAGES = {
     },
     fallbackColor: "#999"
   },
+  // Libellés des contours, y compris pour les régions sans cas.
+  zones: {
+    labels: {
+      "Kherson Oblast": { fr: "Kherson", en: "Kherson" },
+      "Volyn Oblast": { fr: "Volhynie", en: "Volyn" },
+      "Rivne Oblast": { fr: "Rivne", en: "Rivne" },
+      "Zhytomyr Oblast": { fr: "Jytomyr", en: "Zhytomyr" },
+      "Kyiv Oblast": { fr: "Kyiv", en: "Kyiv" },
+      "Chernihiv Oblast": { fr: "Tchernihiv", en: "Chernihiv" },
+      "Sumy Oblast": { fr: "Soumy", en: "Sumy" },
+      "Kharkiv Oblast": { fr: "Kharkiv", en: "Kharkiv" },
+      "Luhansk Oblast": { fr: "Louhansk", en: "Luhansk" },
+      "Donetsk Oblast": { fr: "Donetsk", en: "Donetsk" },
+      "Zaporizhia Oblast": { fr: "Zaporijjia", en: "Zaporizhia" },
+      "Lviv Oblast": { fr: "Lviv", en: "Lviv" },
+      "Ivano-Frankivsk Oblast": { fr: "Ivano-Frankivsk", en: "Ivano-Frankivsk" },
+      "Zakarpattia Oblast": { fr: "Transcarpatie", en: "Zakarpattia" },
+      "Ternopil Oblast": { fr: "Ternopil", en: "Ternopil" },
+      "Chernivtsi Oblast": { fr: "Tchernivtsi", en: "Chernivtsi" },
+      "Odessa Oblast": { fr: "Odessa", en: "Odesa" },
+      "Mykolaiv Oblast": { fr: "Mykolaïv", en: "Mykolaiv" },
+      "Autonomous Republic of Crimea": { fr: "Crimée", en: "Crimea" },
+      "Vinnytsia Oblast": { fr: "Vinnytsia", en: "Vinnytsia" },
+      "Khmelnytskyi Oblast": { fr: "Khmelnytskyï", en: "Khmelnytskyi" },
+      "Cherkasy Oblast": { fr: "Tcherkassy", en: "Cherkasy" },
+      "Poltava Oblast": { fr: "Poltava", en: "Poltava" },
+      "Dnipropetrovsk Oblast": { fr: "Dnipropetrovsk", en: "Dnipropetrovsk" },
+      "Kirovohrad Oblast": { fr: "Kirovohrad", en: "Kirovohrad" },
+      "Kyiv": { fr: "Kyiv", en: "Kyiv" },
+      "Sevastopol": { fr: "Sébastopol", en: "Sevastopol" }
+    }
+  },
   choropleth: {
     couleurSansCas: "#7890a0",
     couleurMinimum: "#f7d457",

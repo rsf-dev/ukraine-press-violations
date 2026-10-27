@@ -7,16 +7,18 @@ export function parseDateFlexible(raw) {
   const s = String(raw).trim();
   if (!s) return null;
 
-  const d1 = new Date(s);
-  if (!isNaN(d1.getTime())) return d1;
-
-  const m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-  if (m) {
-    const dd = parseInt(m[1], 10);
-    const mm = parseInt(m[2], 10);
-    const yy = parseInt(m[3], 10);
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,3})?(?:Z|[+-]\d{2}:\d{2}))?$/);
+  const local = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if (iso || local) {
+    const dd = Number(iso ? iso[3] : local[1]);
+    const mm = Number(iso ? iso[2] : local[2]);
+    const yy = Number(iso ? iso[1] : local[3]);
     const d = new Date(Date.UTC(yy, mm - 1, dd, 0, 0, 0));
-    if (!isNaN(d.getTime())) return d;
+    if (d.getUTCFullYear() !== yy || d.getUTCMonth() !== mm - 1 || d.getUTCDate() !== dd) return null;
+    if (!iso?.[4]) return d;
+    if (Number(iso[4]) > 23 || Number(iso[5]) > 59 || Number(iso[6]) > 59) return null;
+    const timestamp = new Date(s);
+    return Number.isFinite(timestamp.getTime()) ? timestamp : null;
   }
   return null;
 }

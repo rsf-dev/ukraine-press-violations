@@ -31,7 +31,7 @@ let timelineZoom = 1;
 let timelineZoomLevel = TIMELINE_DEFAULT_ZOOM_LEVEL;
 let timelineZoomCenter = 0.5;
 let timelineSelectedYear = null;
-let timelineActions = {};
+let timelineActions = Object.create(null);
 let zoomBound = false;
 let zoomButtonEl = null;
 let zoomButtonTargetYear = null;
@@ -187,6 +187,7 @@ function setChartDaysRange(startTime, maxTime, startOfDayUTC, key, { preserveTim
 
   const startDay = startOfDayUTC(startTime);
   const maxDay = Math.max(startDay, startOfDayUTC(maxTime));
+  if (!Number.isFinite(startDay) || !Number.isFinite(maxDay) || maxDay - startDay > 100 * 366 * 86400000) throw new Error("Période de chronologie invalide ou supérieure à 100 ans.");
   const days = [];
   for (let d = startDay; d <= maxDay; d += 24 * 3600 * 1000) days.push(d);
 
@@ -885,7 +886,7 @@ function lerp(a, b, t) { return a + (b - a) * t; }
 function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
 
 function interpolateSeries(a, b, t) {
-  const out = {};
+  const out = Object.create(null);
   for (const type of Object.keys(b)) {
     const A = (a && a[type]) ? a[type] : null;
     const B = b[type];
@@ -1261,7 +1262,7 @@ function drawStackedColumnChart({ canvas, days, seriesByType, cursorTs, windowSt
   const allBuckets = days?.[0]?.startTs != null ? days : buildTimelineBuckets(days, timelineUnit);
   const viewport = getTimelineViewport(allBuckets);
   const visibleBuckets = viewport.days;
-  const visibleSeriesByType = {};
+  const visibleSeriesByType = Object.create(null);
   for (const [type, values] of Object.entries(seriesByType || {})) {
     visibleSeriesByType[type] = Array.isArray(values)
       ? values.slice(viewport.startIndex, viewport.endIndex + 1)
@@ -1424,7 +1425,7 @@ function getWindowStartDayIndex(days, startTime, startOfDayUTC) {
 }
 
 function maskSeriesOutsideRange(series, startIdx, endIdx) {
-  const out = {};
+  const out = Object.create(null);
   for (const [type, arr] of Object.entries(series)) {
     out[type] = arr.map((v, i) => (i >= startIdx && i <= endIdx ? v : null));
   }
@@ -1434,7 +1435,7 @@ function maskSeriesOutsideRange(series, startIdx, endIdx) {
 function maskSeriesOutsideTimeRange(series, buckets, startTime, endTime) {
   const rangeStart = Number.isFinite(startTime) ? startTime : Number.NEGATIVE_INFINITY;
   const rangeEnd = Number.isFinite(endTime) ? endTime : Number.POSITIVE_INFINITY;
-  const out = {};
+  const out = Object.create(null);
 
   for (const [type, arr] of Object.entries(series || {})) {
     out[type] = arr.map((value, index) => {
@@ -1462,7 +1463,7 @@ function buildCumulativeSeries(events, days, getEventTime, startOfDayUTC, typeCo
     bucket[t] = (bucket[t] || 0) + 1;
   }
 
-  const series = {};
+  const series = Object.create(null);
   for (const t of allTypes) {
     let acc = 0;
     series[t] = days.map(day => {
@@ -1493,13 +1494,13 @@ function buildDailySeries(events, days, getEventTime, startOfDayUTC, typeConfigK
     }
     if (bucketIndex < 0) continue;
 
-    if (!byBucket.has(bucketIndex)) byBucket.set(bucketIndex, {});
+    if (!byBucket.has(bucketIndex)) byBucket.set(bucketIndex, Object.create(null));
     const bucket = byBucket.get(bucketIndex);
     const type = ev.type_violence;
     bucket[type] = (bucket[type] || 0) + 1;
   }
 
-  const series = {};
+  const series = Object.create(null);
   for (const type of typeConfigKeys) {
     series[type] = buckets.map((bucket, index) => byBucket.get(index)?.[type] || 0);
   }

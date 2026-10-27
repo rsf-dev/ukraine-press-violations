@@ -217,6 +217,27 @@
   color: var(--rsf-active-text);
 }
 
+/* Actions mises en avant dans les deux thèmes, même sans survol. */
+#rsf-map-app :is(#utility-menu-panel, #floating-controls, #app-topbar, #map-title-panel)
+  :is(#rsf-cartography-toggle, #title-clear-filters) {
+  background: var(--rsf-accent);
+  border-color: var(--rsf-accent);
+  color: #fff;
+}
+
+#rsf-map-app :is(#utility-menu-panel, #floating-controls, #app-topbar, #map-title-panel)
+  :is(#rsf-cartography-toggle, #title-clear-filters):is(:hover, :focus-visible, :active) {
+  background: #e40046;
+  border-color: #e40046;
+  color: #fff;
+}
+
+#rsf-map-app :is(#utility-menu-panel, #floating-controls, #app-topbar, #map-title-panel)
+  :is(#rsf-cartography-toggle, #title-clear-filters):focus-visible {
+  outline: 2px solid var(--rsf-text);
+  outline-offset: 2px;
+}
+
 #rsf-map-app :is(.leaflet-control-layers, .leaflet-bar a, .leaflet-control-attribution) {
   background-color: var(--rsf-surface);
   color: var(--rsf-text);
