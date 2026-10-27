@@ -10,10 +10,6 @@ export const UI_STRINGS = {
       type04: "Territoire revendiqué par la Russie",
       source: "Source : Institute for the Study of War and AEI’s Critical Threats Project",
     },
-    loader: {
-      subtitle: "Exactions commises par l’armée russe contre les journalistes en Ukraine depuis le 24 février 2022",
-      subtext: "Chargement de la carte…"
-    },
     tutorial: {
       step1: {
         title: "Bienvenue",
@@ -148,10 +144,6 @@ export const UI_STRINGS = {
       type03: "Ukrainian counteroffensives",
       type04: "Claimed Russian-controlled territory",
       source: "Source : Institute for the Study of War and AEI’s Critical Threats Project",
-    },
-    loader: {
-      subtitle: "Russian exactions committed against journalists in Ukraine since 24 February 2022",
-      subtext: "Loading the map…"
     },
     tutorial: {
       step1: {
@@ -396,10 +388,7 @@ export function applyStaticTextsForLang(lang) {
   const tutLangBtn = document.getElementById("tutorial-lang-btn");
   if (tutLangBtn) tutLangBtn.textContent = strings.ui.tutorialLangButton;
 
-  const loaderSubtitle = document.querySelector(".loading-subtitle");
-  const loaderSubtext = document.querySelector(".loading-subtext");
-  if (loaderSubtitle) loaderSubtitle.textContent = strings.loader.subtitle;
-  if (loaderSubtext) loaderSubtext.textContent = strings.loader.subtext;
+  // Le texte anglais du chargement est défini une seule fois dans index.html.
 
   const lieuInput = document.getElementById("lieu-filter");
   if (lieuInput) lieuInput.placeholder = strings.ui.searchPlaceholder;

@@ -1674,7 +1674,7 @@ function applyConfiguredControls() {
   if (logo) logo.src = withV(FILES.assets.logo);
   const favicon = document.querySelector('link[rel="icon"]');
   if (favicon) favicon.href = withV(FILES.assets.favicon);
-  const stylesheet = document.querySelector('link[rel="stylesheet"][href^="css/"]');
+  const stylesheet = document.getElementById("app-stylesheet");
   if (stylesheet) stylesheet.href = withV(FILES.assets.feuilleDeStyle);
   document.querySelectorAll(".rsf-cartography-link").forEach((link, index) => {
     const card = REGLAGES.cartesLiees[index];
