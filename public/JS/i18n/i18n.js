@@ -115,7 +115,9 @@ export const UI_STRINGS = {
         "Violences contre les journalistes dans le monde (édition 2025)",
         "Surveillance des violences contre les journalistes en Ukraine",
         "Surveillance des violences contre les journalistes dans la région des Grands Lacs africains",
-        "Les journalistes sur les routes de l'exil (édition 2021 à 2025)"
+        "Les journalistes sur les routes de l'exil (édition 2021 à 2025)",
+        "Surveillance des assassinats de journalistes au Mexique",
+        "Surveillance des violations envers les journalistes au Liban, en Palestine et en Israël"
       ]
     },
     playbackMessages: {
@@ -251,7 +253,9 @@ export const UI_STRINGS = {
         "Violence against journalists worldwide (2025 edition)",
         "Monitoring violence against journalists in Ukraine",
         "Monitoring violence against journalists in Africa's Great Lakes region",
-        "Journalists on the routes of exile (2021 to 2025 edition)"
+        "Journalists on the routes of exile (2021 to 2025 edition)",
+        "Monitoring murders of journalists in Mexico",
+        "Monitoring violations against journalists in Lebanon, Palestine and Israel"
       ]
     },
     playbackMessages: {

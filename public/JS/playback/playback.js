@@ -59,9 +59,7 @@ export function createPlayback({
       }
     }
   }
-  function getMaxTime() {
-    const s = getState();
-    const seq = s.playbackSequence || [];
+  function getMaxTime(seq = getState().playbackSequence || []) {
 
     const maxEventsT = seq.length
       ? getEventTime(seq[seq.length - 1])
@@ -146,8 +144,8 @@ export function createPlayback({
 
     const playbackIndex = playbackSequence.length - 1;
 
-    const lastEventT = getEventTime(playbackSequence[playbackIndex]);
-    const playbackCutoffTime = Number.isFinite(lastEventT) ? lastEventT : getMaxTime();
+    // Les snapshots d'occupation peuvent être plus récents que le dernier cas.
+    const playbackCutoffTime = getMaxTime(playbackSequence);
 
     setState({ playbackSequence, playbackIndex, playbackCutoffTime });
 

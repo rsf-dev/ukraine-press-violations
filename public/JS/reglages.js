@@ -21,7 +21,8 @@ export const REGLAGES = {
         { date: "2022-09-11", url: "geojson/Leaflet_Ukraine_conflict_map_11-09-2022.geojson" },
         { date: "2024-08-18", url: "geojson/Leaflet_Ukraine_conflict_map_18-08-2024.geojson" },
         { date: "2026-01-26", url: "geojson/Leaflet_Ukraine_conflict_map_26-01-2026.geojson" },
-        { date: "2026-04-19", url: "geojson/Leaflet_Ukraine_conflict_map_19-04-2026.geojson" }
+        { date: "2026-04-19", url: "geojson/Leaflet_Ukraine_conflict_map_19-04-2026.geojson" },
+        { date: "2026-11-05", url: "geojson/Leaflet_Ukraine_conflict_map_05-11-2026.geojson" }
       ]
     },
     assets: {
@@ -301,7 +302,7 @@ export const REGLAGES = {
     opaciteAvecCas: 0.9
   },
   occupation: {
-    indexParDefaut: 5,
+    indexParDefaut: 7,
     types: {
       type01: { i18nKey: "type01", color: "#C70900", style: { weight: 1, fillOpacity: 0.35 } },
       type02: { i18nKey: "type02", color: "#FF9800", style: { weight: 1, fillOpacity: 0.4 } },
@@ -364,7 +365,9 @@ export const REGLAGES = {
     { href: "https://rsf-carte-journalistes-tues-disparus-otages-detenus-2025.rsf.org/", image: "assets/carte_bilan.png" },
     { href: "https://ukraine-mobilisation.rsf.org/", image: "assets/carte_ukraine.png" },
     { href: "https://grands-lacs.rsf.org/", image: "assets/grands-lacs.png" },
-    { href: "https://routes-de-l-exil.data.rsf.org/", image: "assets/carte_exil.png" }
+    { href: "https://routes-de-l-exil.data.rsf.org/", image: "assets/carte_exil.png" },
+    { href: "https://mexico-press-violations.data.rsf.org/", image: "assets/carte_mexique.png" },
+    { href: "https://lebanon-palestine-israel-violations-against-journalists.data.rsf.org/", image: "assets/carte_moyen_orient.png" }
   ]
 };
 
