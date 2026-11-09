@@ -71,6 +71,7 @@ const { createBasemapLayer, createGeojsonRenderer, waitForBasemapReady, applyBas
 
 const FEATURES = REGLAGES.fonctionnalites;
 const FILES = REGLAGES.fichiers;
+const SUPPLEMENT_SETTINGS = (REGLAGES.filtresAdditionnels || []).filter(filter => filter.enabled !== false);
 const MAP_SETTINGS = REGLAGES.carte;
 const MAP_CRS = { mercator: L.CRS.EPSG3857 }[MAP_SETTINGS.projection];
 if (!MAP_CRS) throw new Error(`Projection non prise en charge : ${MAP_SETTINGS.projection}`);
@@ -124,6 +125,7 @@ let basemapEntries = [];
 let geojsonLevelsController = null;
 let allEvents = [];
 let selectedTypes = new Set();
+const activeSupplementFilters = new Set();
 let OccupationCtrl = null;
 let OccupationLegend = null;
 
@@ -165,6 +167,8 @@ let rightChartRowsByName = new Map(); // name -> { rowEl, labelEl, barEl, valueE
 
 // Cache datas par langue
 const dataByLang = { fr: null, en: null };
+// Le fichier bilingue est chargé et validé une seule fois, même lors d'un changement de langue.
+const dataBySource = new Map();
 
 
 /// === HELPERS ===
@@ -225,21 +229,33 @@ function getEventGeojsonName(ev) {
   return ev.geojson || ev.Geojson || null;
 }
 
-function normalizeConfiguredEvent(event) {
+function getEventStatus(ev, lang = currentLang) {
+  const raw = REGLAGES.champsDonnees.statut.map(field => ev[field])
+    .find(value => typeof value === "string" && value.trim());
+  const value = (raw || "").trim();
+  const normalized = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const key = { ongoing: "ongoing", "en cours": "ongoing", ended: "ended", termine: "ended" }[normalized];
+  return UI_STRINGS[lang]?.ui.eventStatus[key] || value || null;
+}
+
+function normalizeConfiguredEvent(event, lang) {
   const pick = key => {
-    for (const field of REGLAGES.champsDonnees[key] || []) {
+    const config = REGLAGES.champsDonnees[key];
+    const fields = Array.isArray(config) ? config : config?.[lang] || config?.fr || [];
+    for (const field of fields) {
       const value = event?.[field];
-      if (value !== undefined && value !== null && value !== "") return value;
+      if (value !== undefined && value !== null && (typeof value !== "string" || value.trim() !== "")) return value;
     }
     return undefined;
   };
+  const category = pick("categorie") ?? event.type_violence;
   return {
     ...event,
     date: pick("date") ?? event.date,
     lieu: pick("emplacement") ?? event.lieu,
     journaliste: pick("personne") ?? event.journaliste,
     description: pick("description") ?? event.description,
-    type_violence: pick("categorie") ?? event.type_violence,
+    type_violence: TYPE_MAP_EN_TO_FR[category] || category,
     oblast: pick("zone") ?? event.oblast ?? event.Oblast,
     geojson: pick("nomGeojson") ?? event.geojson ?? event.Geojson,
     lat: parseCoordinate(pick("latitude") ?? event.lat, 90),
@@ -300,7 +316,33 @@ function getRegionCountColor(count, maxCount) {
 function eventPassesRegionsChoroplethFilters(ev) {
   const typeOK = selectedTypes.size === 0 || selectedTypes.has(ev.type_violence);
   const playbackOK = eventPassesPlaybackWindow(ev);
-  return typeOK && playbackOK;
+  return typeOK && playbackOK && eventMatchesSupplementFilters(ev);
+}
+
+function eventHasSupplement(ev, key) {
+  const config = SUPPLEMENT_SETTINGS.find(filter => filter.id === key);
+  if (!config) return false;
+  if (config.mode === "categorie_statut" && (TYPE_MAP_EN_TO_FR[ev.type_violence] || ev.type_violence) !== config.categorie) return false;
+  const fields = [config.field, ...(config.fields || [])].filter(Boolean);
+  const field = fields.find(name => Object.prototype.hasOwnProperty.call(ev, name)) ||
+    Object.keys(ev).find(name => fields.some(alias => alias.toLowerCase() === name.toLowerCase()));
+  const normalize = value => String(value ?? "").trim().toLowerCase();
+  return (config.values || [true, "oui", "yes", 1]).some(value => normalize(value) === normalize(ev[field]));
+}
+
+function eventMatchesSupplementFilters(ev) {
+  return Array.from(activeSupplementFilters).every(key => eventHasSupplement(ev, key));
+}
+
+function getSupplementLabel(key) {
+  const config = SUPPLEMENT_SETTINGS.find(filter => filter.id === key);
+  return UI_STRINGS[currentLang]?.ui.supplementLabels?.[key] || config?.labels?.[currentLang] || config?.labels?.fr || key;
+}
+
+function getEventSupplementBadges(ev) {
+  return SUPPLEMENT_SETTINGS
+    .filter(filter => filter.showBadge !== false && eventHasSupplement(ev, filter.id))
+    .map(filter => ({ id: filter.id, label: getSupplementLabel(filter.id) }));
 }
 
 
@@ -445,7 +487,9 @@ function updateBottomChart(force = false) {
       playbackWindowStartTime: getPlaybackWindowStartTime(),
       playbackCutoffTime,
       currentLang,
-      getEventOblast
+      getEventOblast,
+      supplementFilterKey: Array.from(activeSupplementFilters).sort().join("|"),
+      eventMatchesSupplementFilters
     }),
 
     pausePlayback: Playback.pause,
@@ -984,6 +1028,7 @@ function buildStackedCountsByGroup({ groupBy, onlyOblast = null, startTime = nul
   const counts = Object.create(null);
   for (const ev of allEvents) {
     if (onlyOblast && getEventOblast(ev) !== onlyOblast) continue;
+    if (!eventMatchesSupplementFilters(ev)) continue;
 
     if (!eventPassesPlaybackWindow(ev, { startTime, cutoffTime })) continue;
 
@@ -1409,6 +1454,7 @@ function syncTitleFilterControls() {
   }
 
   syncTitleCalendarControls();
+  syncSupplementFilterButtons();
 
   const villeSelect = document.getElementById("ville-select");
   syncTitleClearButton();
@@ -1502,7 +1548,25 @@ function getAllEventTypes() {
 function hasActiveTitleFilters() {
   const allTypeCount = getAllEventTypes().length;
   const allTypesSelected = allTypeCount === 0 || selectedTypes.size === 0 || selectedTypes.size === allTypeCount;
-  return Boolean(selectedOblast || selectedVille || !isPlaybackWindowDefault()) || !allTypesSelected;
+  return Boolean(selectedOblast || selectedVille || activeSupplementFilters.size || !isPlaybackWindowDefault()) || !allTypesSelected;
+}
+
+function syncSupplementFilterButtons() {
+  document.querySelectorAll("[data-supplement-filter]").forEach(button => {
+    const key = button.dataset.supplementFilter;
+    const active = activeSupplementFilters.has(key);
+    button.textContent = getSupplementLabel(key);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+function toggleSupplementFilter(key) {
+  if (!FEATURES.filtresAdditionnels?.enabled || !SUPPLEMENT_SETTINGS.some(filter => filter.id === key && filter.filterable !== false)) return;
+  Playback.pause?.();
+  if (activeSupplementFilters.has(key)) activeSupplementFilters.delete(key);
+  else activeSupplementFilters.add(key);
+  afficherEvenements();
 }
 
 function syncTitleClearButton() {
@@ -1542,6 +1606,7 @@ function clearTitleFilters({ resetZoom = false } = {}) {
   statsSelectedVille = null;
   villesDisponibles = [];
   selectedTypes = new Set(allEvents.map(ev => ev.type_violence));
+  activeSupplementFilters.clear();
   resetPlaybackWindowToDefault();
   BottomChart.resetZoom?.();
 
@@ -1592,6 +1657,20 @@ function initRsfCartographyModal() {
 }
 
 function applyConfiguredControls() {
+  const supplementContainer = document.getElementById("title-supplement-filters");
+  if (supplementContainer) {
+    supplementContainer.replaceChildren();
+    const filters = SUPPLEMENT_SETTINGS.filter(filter => filter.filterable !== false);
+    supplementContainer.hidden = !FEATURES.filtresAdditionnels?.enabled || filters.length === 0;
+    filters.forEach(filter => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.supplementFilter = filter.id;
+      button.setAttribute("aria-pressed", "false");
+      supplementContainer.appendChild(button);
+    });
+    syncSupplementFilterButtons();
+  }
   const visibleByFeature = {
     "utility-events-toggle": FEATURES.listeCas?.enabled,
     "utility-regions-mode-toggle": FEATURES.choropleth?.enabled,
@@ -1734,6 +1813,9 @@ function initHarmonizedShell() {
   });
   calendarStart?.addEventListener("change", applyTitleCalendarInputs);
   calendarEnd?.addEventListener("change", applyTitleCalendarInputs);
+  document.querySelectorAll("[data-supplement-filter]").forEach(button => {
+    button.addEventListener("click", () => toggleSupplementFilter(button.dataset.supplementFilter));
+  });
   clearBtn?.addEventListener("click", () => clearTitleFilters({ resetZoom: false }));
 
 
@@ -1776,6 +1858,11 @@ function afficherEvenements({ renderGeography = true } = {}) {
     createMarkerIcon,
     getLegendIconUrl,
 
+    typeColors: TYPE_COLORS,
+    eventMatchesSupplementFilters,
+    getEventSupplementBadges,
+    getEventStatus,
+    statusLabel: UI_STRINGS[currentLang].ui.eventStatus.label,
     pausePlayback: Playback.pause,
     focusEvent,
     setRightPanelExpanded,
@@ -1964,18 +2051,17 @@ async function loadEventsForLang(lang) {
 
   const base = FILES.donnees[lang];
   if (!base) throw new Error(`Fichier de données manquant pour la langue : ${lang}`);
-  const resp = await fetch(withV(base));
-  if (!resp.ok) throw new Error(`Événements ${lang} : HTTP ${resp.status}`);
-  const data = validateEvents(await resp.json(), REGLAGES.champsDonnees).map(normalizeConfiguredEvent);
-
-  if (lang === "en") {
-    data.forEach(ev => {
-      if (TYPE_MAP_EN_TO_FR[ev.type_violence]) {
-        ev.type_violence_original = ev.type_violence;
-        ev.type_violence = TYPE_MAP_EN_TO_FR[ev.type_violence];
-      }
-    });
+  if (!dataBySource.has(base)) {
+    const source = (async () => {
+      const resp = await fetch(withV(base));
+      if (!resp.ok) throw new Error(`Événements : HTTP ${resp.status}`);
+      return validateEvents(await resp.json(), REGLAGES.champsDonnees);
+    })();
+    dataBySource.set(base, source);
+    source.catch(() => dataBySource.delete(base));
   }
+  const source = await dataBySource.get(base);
+  const data = source.map(event => normalizeConfiguredEvent(event, lang));
 
   dataByLang[lang] = data;
   return data;
@@ -2210,6 +2296,7 @@ async function initMap() {
   window.maxMapZoom = MAX_ZOOM;
 
   window.resetMapView = function () {
+    activeSupplementFilters.clear();
     regionsModeActive = Boolean(FEATURES.choropleth?.enabled && FEATURES.choropleth?.actifParDefaut);
     clearRegionsChoroplethLayer({ cancelPending: true });
     if (regionsModeActive) {

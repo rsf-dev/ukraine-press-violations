@@ -8,7 +8,7 @@ export const REGLAGES = {
   },
 
   fichiers: {
-    donnees: { fr: "evenements.json", en: "events.json" },
+    donnees: { fr: "evenements.json", en: "evenements.json" },
     geojson: {
       regions: "geojson/ukraine_oblasts.geojson",
       contour: "geojson/static.geojson",
@@ -55,16 +55,17 @@ export const REGLAGES = {
 
   champsDonnees: {
     date: ["date", "date_evenement", "date_event", "date_iso"],
-    emplacement: ["lieu", "ville", "city", "location"],
-    personne: ["journaliste", "name", "nom"],
-    categorie: ["type_violence", "type", "category"],
-    description: ["description", "summary"],
-    zone: ["Oblast", "oblast", "region", "region_name"],
+    emplacement: { fr: ["lieu", "ville", "city", "location"], en: ["lieu_en", "lieu", "ville", "city", "location"] },
+    personne: { fr: ["journaliste", "name", "nom"], en: ["journaliste_en", "journaliste", "name", "nom"] },
+    categorie: { fr: ["type_violence", "type", "category"], en: ["type_violence_en", "type_violence", "type", "category"] },
+    description: { fr: ["description", "summary"], en: ["description_en", "description", "summary"] },
+    zone: { fr: ["Oblast", "oblast", "region", "region_name"], en: ["Oblast_en", "Oblast", "oblast", "region", "region_name"] },
     nomGeojson: ["Geojson", "geojson", "shapeName"],
     latitude: ["lat", "latitude"],
     longitude: ["lng", "lon", "longitude"],
     identifiant: ["compteur_evenements", "id"],
-    lien: ["lien", "link"]
+    statut: ["status", "Status", "statut", "Statut"],
+    lien: { fr: ["lien", "link"], en: ["lien_en", "lien", "link"] }
   },
 
   carte: {
@@ -206,10 +207,15 @@ export const REGLAGES = {
     { cle: "Disparu", slug: "disparu", icone: "disparu.png", couleur: "#2196F3", labels: { fr: "Disparu", en: "Missing" }, valeursEntree: ["Disparu", "Missing"] },
     { cle: "Tentative d'homicide", slug: "tentative-homicide", icone: "tentative.png", couleur: "#9C27B0", labels: { fr: "Tentative d'homicide", en: "Attempted killing" }, valeursEntree: ["Tentative d'homicide", "Attempted killing"] },
     { cle: "Dommages matériels", slug: "dommages-materiels", icone: "materiel.png", couleur: "#4CAF50", labels: { fr: "Dommages matériels", en: "Property damages" }, valeursEntree: ["Dommages matériels", "Property damages"] },
-    { cle: "Emprisonné", slug: "emprisonne", icone: "emprisonne.png", couleur: "#00FFFF", labels: { fr: "Emprisonné", en: "Imprisoned" }, valeursEntree: ["Emprisonné", "Imprisoned"] },
-    { cle: "Emprisonné (libéré)", slug: "emprisonne-libere", icone: "emprisonne.png", couleur: "#F7D100", labels: { fr: "Libéré", en: "Released" }, valeursEntree: ["Emprisonné (libéré)", "Imprisonné libéré", "Imprisoned (released)", "Released"] }
+    { cle: "Emprisonné", slug: "emprisonne", icone: "emprisonne.png", couleur: "#00FFFF", labels: { fr: "Emprisonné", en: "Imprisoned" }, valeursEntree: ["Emprisonné", "Imprisoned"] }
   ],
   listeCas: { champsSupplementaires: [] },
+  // Même configuration que les filtres complémentaires de la carte Mexique.
+  filtresAdditionnels: [
+    { id: "drone", enabled: true, filterable: true, showBadge: true, field: "drone", values: [true, "oui", "yes", 1], labels: { fr: "Attaque par drone", en: "Drone attack" } },
+    // Format de la carte Palestine ; libellés traduits dans i18n/i18n.js.
+    { id: "ongoing_imprisonment", enabled: true, filterable: true, showBadge: true, mode: "categorie_statut", categorie: "Emprisonné", fields: ["status", "Status", "statut", "Statut"], values: ["ongoing", "en cours"] }
+  ],
   // Styles Leaflet/MapLibre : stroke, color, weight, opacity, fill, fillColor, fillOpacity.
   // fillColor: null reprend color. Chaque couche complète defaut.
   stylesGeojson: {
@@ -333,7 +339,7 @@ export const REGLAGES = {
     langues: { enabled: true },
     rsfCartographie: { enabled: true },
     contour: { enabled: true },
-    filtresAdditionnels: { enabled: false },
+    filtresAdditionnels: { enabled: true },
     occupationLayer: { enabled: true },
     choropleth: {
       enabled: true, // Conserve la commande dans le menu.

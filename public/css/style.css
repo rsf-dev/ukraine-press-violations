@@ -3237,6 +3237,7 @@ body.theme-dark .credits-close {
 #floating-controls.collapsed .floating-content,
 #floating-controls.collapsed .title-filter-grid,
 #floating-controls.collapsed .title-mode-switch,
+#floating-controls.collapsed #title-supplement-filters,
 #floating-controls.collapsed .title-category-list {
   display: none;
 }
@@ -3316,6 +3317,90 @@ body.theme-dark .credits-close {
   width: 100%;
   justify-content: center;
   margin-top: 8px;
+}
+
+.focus-toggle.supplement-toggle {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #d7dfdc;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.focus-toggle.supplement-toggle[hidden] {
+  display: none;
+}
+
+.focus-toggle.supplement-toggle button {
+  min-width: 0;
+  min-height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid #d7dfdc;
+  background: transparent;
+  color: #5f6b66;
+  cursor: pointer;
+  font-family: "Electrolize", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.focus-toggle.supplement-toggle button:last-child {
+  border-right: 0;
+}
+
+.focus-toggle.supplement-toggle button:hover,
+.focus-toggle.supplement-toggle button:focus-visible {
+  color: #16201d;
+  background: rgba(228, 0, 70, 0.07);
+  outline: 0;
+}
+
+.focus-toggle.supplement-toggle button.active {
+  background: rgba(228, 0, 70, 0.12);
+  color: #8d002c;
+}
+
+body.theme-dark .focus-toggle.supplement-toggle {
+  border-color: rgba(230, 241, 237, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+body.theme-dark .focus-toggle.supplement-toggle button {
+  border-color: rgba(230, 241, 237, 0.18);
+  color: rgba(238, 245, 242, 0.72);
+}
+
+body.theme-dark .focus-toggle.supplement-toggle button:hover,
+body.theme-dark .focus-toggle.supplement-toggle button:focus-visible,
+body.theme-dark .focus-toggle.supplement-toggle button.active {
+  background: #b60038;
+  color: #fff;
+}
+
+.event-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 7px;
+}
+
+#rsf-map-app #event-panel .event-badges .event-supplement-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #b60038;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
 }
 
 .title-category-list {
@@ -3545,6 +3630,11 @@ body.theme-dark .language-toggle {
 
 #floating-controls .title-category-list {
   order: 15;
+}
+
+#floating-controls #title-supplement-filters {
+  order: 12;
+  margin-top: 8px;
 }
 
 #floating-controls .title-clear-filters {

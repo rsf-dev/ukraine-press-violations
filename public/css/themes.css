@@ -60,6 +60,11 @@
   backdrop-filter: none;
 }
 
+/* La couleur de chaque catégorie reste visible sur les deux thèmes. */
+#rsf-map-app #event-panel .event-item {
+  border-left: 4px solid var(--event-category-color, var(--rsf-border));
+}
+
 #rsf-map-app :is(.map-title-panel, #event-panel, #country-panel, #bottom-chart-panel,
   #utility-menu-panel, .rsf-cartography-card, .credits-card, .tutorial-card)
   :is(h1, h2, h3, h4, p, span, label, .chart-bar-label, .chart-bar-value,

@@ -76,6 +76,10 @@ export const EventsRenderer = (() => {
     getDisplayLabelForType,
     createMarkerIcon,
     getLegendIconUrl,
+    eventMatchesSupplementFilters,
+    getEventSupplementBadges,
+    getEventStatus,
+    statusLabel,
 
     // callbacks UI
     pausePlayback,
@@ -84,6 +88,7 @@ export const EventsRenderer = (() => {
     updateHeaderLegendCounts,
     updateBottomChart,
     attachToMap = true,
+    typeColors = {},
     caseFields = []
   }) {
     if (!map) throw new Error("EventsRenderer.init({ leafletMap }) must be called before render().");
@@ -104,7 +109,8 @@ export const EventsRenderer = (() => {
       const playbackStartOK = !Number.isFinite(playbackWindowStartTime) || (Number.isFinite(t) && t >= playbackWindowStartTime);
       const playbackEndOK = (playbackCutoffTime === null) ? true : (Number.isFinite(t) && t <= playbackCutoffTime);
       const playbackOK = playbackStartOK && playbackEndOK;
-      return typeOK && oblastOK && villeOK && playbackOK;
+      const supplementOK = !eventMatchesSupplementFilters || eventMatchesSupplementFilters(ev);
+      return typeOK && oblastOK && villeOK && playbackOK && supplementOK;
     });
 
 
@@ -176,10 +182,19 @@ export const EventsRenderer = (() => {
         const item = document.createElement("div");
         item.className = `event-item event-${normalizeType(ev.type_violence)}`;
         item.id = id;
+        if (typeColors[ev.type_violence]) item.style.setProperty("--event-category-color", typeColors[ev.type_violence]);
 
         const ob = getEventOblast(ev);
         const obTxt = ob ? `<span class="event-oblast">${escapeHtml(ob)}</span>` : "";
         const dateTxt = ts ? formatDateFR(ts) : "—";
+        const status = ev.type_violence === "Emprisonné" ? getEventStatus?.(ev) : null;
+        const statusHtml = status
+          ? `<div class="event-status"><b>${escapeHtml(statusLabel)}</b> : ${escapeHtml(status)}</div>`
+          : "";
+        const badges = getEventSupplementBadges?.(ev) || [];
+        const badgesHtml = badges.length
+          ? `<div class="event-badges">${badges.map(badge => `<span class="event-supplement-badge" data-supplement-badge="${escapeAttribute(badge.id)}">${escapeHtml(badge.label)}</span>`).join("")}</div>`
+          : "";
 
         const url = getEventLink(ev);
         const readMoreLabel = (currentLang === "fr") ? "	↪ Lire plus" : "↪ Read more";
@@ -211,6 +226,8 @@ export const EventsRenderer = (() => {
               <div class="date">${escapeHtml(dateTxt)}</div>
               <p><b>${escapeHtml(labelType)}</b> — ${escapeHtml(ev.description)}</p>
               ${extraFieldsHtml}
+              ${statusHtml}
+              ${badgesHtml}
               ${readMoreHtml}
             </div>
           </div>`;

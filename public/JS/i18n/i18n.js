@@ -67,6 +67,9 @@ export const UI_STRINGS = {
       eventPanelTitle: "Liste des cas",
       closeButton: "Fermer",
       clearFilters: "Supprimer les filtres",
+      supplementFilters: "Filtres complémentaires",
+      supplementLabels: { ongoing_imprisonment: "Cas en cours" },
+      eventStatus: { label: "Statut", ongoing: "En cours", ended: "Terminé" },
       legendSection: "Légende",
       notesSection: "Notes",
       eventFooterNote: "<b>Note :</b> cette carte recense les cas documentés par RSF dans le cadre de son mandat. Les chiffres peuvent évoluer avec les mises à jour du monitoring.",
@@ -204,6 +207,9 @@ export const UI_STRINGS = {
       eventPanelTitle: "Case list",
       closeButton: "Close",
       clearFilters: "Clear filters",
+      supplementFilters: "Additional filters",
+      supplementLabels: { ongoing_imprisonment: "Ongoing cases" },
+      eventStatus: { label: "Status", ongoing: "Ongoing", ended: "Ended" },
       legendSection: "Legend",
       notesSection: "Notes",
       eventFooterNote: "<b>Note:</b> this map lists cases documented by RSF within the scope of its mandate. Figures may change as monitoring is updated.",
@@ -286,8 +292,7 @@ export const TYPE_LABELS = {
     "Disparu": "Disparu",
     "Tentative d'homicide": "Tentative d'homicide",
     "Dommages matériels": "Dommages matériels",
-    "Emprisonné": "Emprisonné",
-    "Emprisonné (libéré)": "Libéré"
+    "Emprisonné": "Emprisonné"
   },
   en: {
     "Blessé": "Injured",
@@ -296,8 +301,7 @@ export const TYPE_LABELS = {
     "Disparu": "Missing",
     "Tentative d'homicide": "Attempted killing",
     "Dommages matériels": "Property damages",
-    "Emprisonné": "Imprisoned",
-    "Emprisonné (libéré)": "Released"
+    "Emprisonné": "Imprisoned"
   }
 };
 
@@ -327,6 +331,7 @@ export function applyStaticTextsForLang(lang) {
 
   const clearFilters = document.getElementById("title-clear-filters");
   if (clearFilters) clearFilters.textContent = strings.ui.clearFilters;
+  document.getElementById("title-supplement-filters")?.setAttribute("aria-label", ui.supplementFilters);
 
   const bottomTitle = document.querySelector(".bottom-chart-title");
   if (bottomTitle) bottomTitle.textContent = strings.ui.bottomChartTitle;

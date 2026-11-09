@@ -23,12 +23,12 @@
   <link rel="stylesheet" href="vendor/markercluster-1.5.3/MarkerCluster.Default.css" integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+" crossorigin="anonymous">
   <script src="vendor/markercluster-1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
 
-  <link id="app-stylesheet" rel="stylesheet" href="css/style.css?v=2026-10-27-fonts-loader-1">
+  <link id="app-stylesheet" rel="stylesheet" href="css/style.css?v=2026-11-09-filters-ux-2">
   <link rel="stylesheet" href="css/panelScroll.css?v=2026-10-12-scroll-v8">
-  <link rel="stylesheet" href="css/themes.css?v=2026-10-26-dark-actions-1">
+  <link rel="stylesheet" href="css/themes.css?v=2026-11-09-filters-ux-2">
   <link rel="stylesheet" href="css/nearbyNavigation.css?v=2026-10-22-nearby-nav-2">
   <script src="JS/embed.js?v=2026-10-27-security-2"></script>
-  <script type="module" src="JS/bootstrap.js?v=2026-11-05-cartography-occupation-1"></script>
+  <script type="module" src="JS/bootstrap.js?v=2026-11-09-filters-ux-2"></script>
 
 </head>
 
@@ -96,25 +96,7 @@
 
     <div class="floating-separator"></div>
 
-    <!-- ÉTAGE 2 : PLAYBACK -->
-    <div class="floating-content">
-      <div class="floating-row">
-        <button id="playback-prev" class="playback-btn" type="button">⏮</button>
-        <button id="playback-toggle" class="playback-btn playback-main" type="button">▶</button>
-        <button id="playback-next" class="playback-btn" type="button">⏭</button>
-        <button id="playback-end" class="playback-btn" type="button">⏭⏭</button>
-        <div class="floating-speed">
-          <select id="playback-speed">
-            <option value="0.5">0.5×</option>
-            <option value="1" selected>1×</option>
-            <option value="2">2×</option>
-          </select>
-
-        </div>
-      </div>
-    </div>
-
-    <div class="title-filter-grid" aria-label="Filtres de la carte">
+    <div id="title-primary-filters" class="title-filter-grid" aria-label="Filtres de la carte">
       <select id="title-oblast-select" aria-label="Oblast">
         <option value="">Toutes les regions</option>
       </select>
@@ -133,9 +115,27 @@
       </label>
     </div>
 
+    <div id="title-supplement-filters" class="focus-toggle supplement-toggle" role="group" aria-label="Filtres complémentaires" hidden></div>
     <div id="header-legend" class="title-category-list" aria-label="Categories"></div>
+
     <button id="title-clear-filters" class="clear-filters-button title-clear-filters" type="button" hidden>Supprimer les
       filtres</button>
+
+    <div class="floating-content">
+      <div class="floating-row">
+        <button id="playback-prev" class="playback-btn" type="button">⏮</button>
+        <button id="playback-toggle" class="playback-btn playback-main" type="button">▶</button>
+        <button id="playback-next" class="playback-btn" type="button">⏭</button>
+        <button id="playback-end" class="playback-btn" type="button">⏭⏭</button>
+        <div class="floating-speed">
+          <select id="playback-speed">
+            <option value="0.5">0.5×</option>
+            <option value="1" selected>1×</option>
+            <option value="2">2×</option>
+          </select>
+        </div>
+      </div>
+    </div>
 
   </div>
 
