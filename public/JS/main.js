@@ -32,6 +32,7 @@ const loadedModules = await Promise.all(moduleKeys.map(key => importV(MODULES[ke
 const modules = Object.fromEntries(moduleKeys.map((key, index) => [key, loadedModules[index]]));
 const { initUtilityMenu } = modules.menu;
 const { initPanelScrollProgress } = modules.panelScroll;
+const { initTitleFilters } = modules.titleFilters;
 
 const { dates, strings, security, bottomChart, eventsRenderer, legend, oblastFilters, playback, i18n, tutorial, occupationLayer, occupationLegend, geojsonLevels, mapRendering, nearbyNavigation } = modules;
 
@@ -125,6 +126,7 @@ let basemapEntries = [];
 let geojsonLevelsController = null;
 let allEvents = [];
 let selectedTypes = new Set();
+let titleFiltersController = null;
 const activeSupplementFilters = new Set();
 let OccupationCtrl = null;
 let OccupationLegend = null;
@@ -1551,6 +1553,13 @@ function hasActiveTitleFilters() {
   return Boolean(selectedOblast || selectedVille || activeSupplementFilters.size || !isPlaybackWindowDefault()) || !allTypesSelected;
 }
 
+function getActiveTitleFilterCount() {
+  const types = getAllEventTypes();
+  const excludedTypes = selectedTypes.size === 0 ? 0 : types.filter(type => !selectedTypes.has(type)).length;
+  return Number(Boolean(selectedOblast)) + Number(Boolean(selectedVille)) + activeSupplementFilters.size +
+    excludedTypes + Number(!isPlaybackWindowDefault());
+}
+
 function syncSupplementFilterButtons() {
   document.querySelectorAll("[data-supplement-filter]").forEach(button => {
     const key = button.dataset.supplementFilter;
@@ -1572,6 +1581,7 @@ function toggleSupplementFilter(key) {
 function syncTitleClearButton() {
   const clearBtn = document.getElementById("title-clear-filters");
   if (clearBtn) clearBtn.hidden = !hasActiveTitleFilters();
+  titleFiltersController?.update();
 }
 
 function applyTitleOblastFilter(oblast) {
@@ -1769,6 +1779,10 @@ function applyConfiguredControls() {
 function initHarmonizedShell() {
   initPanelScrollProgress({ getLanguage: () => currentLang });
   applyConfiguredControls();
+  titleFiltersController = initTitleFilters({
+    getActiveCount: getActiveTitleFilterCount,
+    getStrings: () => UI_STRINGS[currentLang].ui.filtersPanel
+  });
   const titlePanel = document.getElementById("floating-controls");
   const titleToggle = document.getElementById("map-title-toggle");
   const oblastSelect = document.getElementById("title-oblast-select");

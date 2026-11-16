@@ -3195,6 +3195,7 @@ body.theme-dark .credits-close {
   min-width: 0;
   max-width: 100%;
   max-height: calc(100vh - 18px);
+  max-height: calc(100dvh - 18px);
   padding: 14px 16px;
   border: 1px solid rgba(18, 40, 32, 0.12);
   border-bottom-left-radius: 0;
@@ -3203,7 +3204,7 @@ body.theme-dark .credits-close {
   box-shadow: 0 14px 35px rgba(14, 24, 20, 0.16);
   backdrop-filter: blur(10px);
   box-sizing: border-box;
-  overflow: visible;
+  overflow: hidden;
 }
 
 #floating-controls .map-title-heading {
@@ -3240,6 +3241,11 @@ body.theme-dark .credits-close {
 #floating-controls.collapsed #title-supplement-filters,
 #floating-controls.collapsed .title-category-list {
   display: none;
+}
+
+#floating-controls.collapsed #title-filters-toggle,
+#floating-controls.collapsed #title-filters-body {
+  display: none !important;
 }
 
 #floating-controls .floating-title {
@@ -3617,6 +3623,87 @@ body.theme-dark .language-toggle {
 #floating-controls.map-title-panel {
   display: flex;
   flex-direction: column;
+  gap: 0;
+}
+
+#floating-controls.map-title-panel > * {
+  flex-shrink: 0;
+}
+
+#floating-controls #title-filters-toggle {
+  order: 11;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 34px;
+  margin-top: 8px;
+  padding: 5px 2px;
+  border: 0;
+  border-top: 1px solid var(--rsf-border, #d8dbe0);
+  border-bottom: 1px solid var(--rsf-border, #d8dbe0);
+  background: var(--rsf-surface, #fff);
+  color: var(--rsf-muted, #5c6068);
+  font-family: "Electrolize", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-align: left;
+  cursor: pointer;
+}
+
+#floating-controls .title-filters-active {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--rsf-active-bg, #f9e6ed);
+  white-space: nowrap;
+}
+
+#floating-controls .title-filters-overflow {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 400;
+}
+
+#floating-controls .title-filters-chevron {
+  margin-left: auto;
+}
+
+#floating-controls .title-filters-overflow:not([hidden]) + .title-filters-chevron {
+  margin-left: 0;
+}
+
+#floating-controls #title-filters-body {
+  order: 12;
+  flex: 0 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--rsf-muted, #5c6068) transparent;
+}
+
+#floating-controls #title-filters-body[hidden],
+#title-filters-toggle [hidden] {
+  display: none !important;
+}
+
+#floating-controls .title-filters-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0 4px 8px 0;
+}
+
+#title-filters-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+#title-filters-body::-webkit-scrollbar-thumb {
+  background: var(--rsf-muted, #5c6068);
+  border-radius: 4px;
 }
 
 #floating-controls .floating-content {
@@ -3912,10 +3999,16 @@ body.theme-dark .legend-row-title {
 
 #floating-controls .floating-content {
   align-self: center;
+  flex: 0 0 auto;
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
 }
 
 #floating-controls .floating-row {
+  flex: 1;
   justify-content: center;
 }
 
@@ -4869,4 +4962,60 @@ body.theme-dark .title-date-control.active span {
   color: rgba(238, 245, 242, 0.78);
 }
 
+/* L'en-tête reste compact pour réserver une zone défilante aux filtres. */
+@media (max-height: 520px) {
+  #floating-controls.map-title-panel {
+    padding: 8px 10px;
+  }
+
+  #floating-controls .floating-title {
+    font-size: 0.95rem;
+  }
+
+  #floating-controls .floating-logo {
+    flex-basis: 40px;
+  }
+
+  #floating-controls .floating-logo img {
+    width: 40px;
+  }
+
+  #floating-controls .floating-subtitle {
+    display: none;
+  }
+
+  #floating-controls .title-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Réserve une zone utilisable aux filtres avec la remise à zéro fixe. */
+@media (max-height: 360px) {
+  #floating-controls.map-title-panel {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  #floating-controls .floating-separator {
+    display: none;
+  }
+
+  #floating-controls .title-filter-grid {
+    margin-top: 6px;
+  }
+
+  #floating-controls #title-filters-toggle {
+    min-height: 30px;
+    margin-top: 6px;
+  }
+
+  #floating-controls .title-clear-filters {
+    min-height: 30px;
+    margin-top: 4px;
+  }
+
+  #floating-controls .floating-content {
+    margin-top: 6px;
+  }
+}
 

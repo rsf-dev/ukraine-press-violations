@@ -162,6 +162,8 @@ export function createTutorial({
 
     if (step === 1 || step === 2) {
       expandTitlePanel();
+      const filtersToggle = document.getElementById("title-filters-toggle");
+      if (step === 2 && filtersToggle?.getAttribute("aria-expanded") === "false") filtersToggle.click();
       setUtilityMenuOpen(false);
       setPanelExpanded(false);
       setRightPanelExpanded(false);

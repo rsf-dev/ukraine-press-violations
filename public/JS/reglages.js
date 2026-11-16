@@ -39,6 +39,7 @@ export const REGLAGES = {
       bottomChart: "./charts/bottomChart.js",
       eventsRenderer: "./events/eventsRenderer.js",
       panelScroll: "./ui/panelScroll.js",
+      titleFilters: "./ui/titleFilters.js",
       legend: "./ui/legend.js",
       oblastFilters: "./ui/oblastFilters.js",
       playback: "./playback/playback.js",

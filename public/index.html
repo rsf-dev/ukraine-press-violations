@@ -23,12 +23,12 @@
   <link rel="stylesheet" href="vendor/markercluster-1.5.3/MarkerCluster.Default.css" integrity="sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+" crossorigin="anonymous">
   <script src="vendor/markercluster-1.5.3/leaflet.markercluster.js" integrity="sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr" crossorigin="anonymous"></script>
 
-  <link id="app-stylesheet" rel="stylesheet" href="css/style.css?v=2026-11-09-filters-ux-2">
+  <link id="app-stylesheet" rel="stylesheet" href="css/style.css?v=2026-11-16-fixed-filter-actions-2">
   <link rel="stylesheet" href="css/panelScroll.css?v=2026-10-12-scroll-v8">
   <link rel="stylesheet" href="css/themes.css?v=2026-11-09-filters-ux-2">
   <link rel="stylesheet" href="css/nearbyNavigation.css?v=2026-10-22-nearby-nav-2">
   <script src="JS/embed.js?v=2026-10-27-security-2"></script>
-  <script type="module" src="JS/bootstrap.js?v=2026-11-09-filters-ux-2"></script>
+  <script type="module" src="JS/bootstrap.js?v=2026-11-16-fixed-filter-actions-2"></script>
 
 </head>
 
@@ -115,11 +115,19 @@
       </label>
     </div>
 
-    <div id="title-supplement-filters" class="focus-toggle supplement-toggle" role="group" aria-label="Filtres complémentaires" hidden></div>
-    <div id="header-legend" class="title-category-list" aria-label="Categories"></div>
-
-    <button id="title-clear-filters" class="clear-filters-button title-clear-filters" type="button" hidden>Supprimer les
-      filtres</button>
+    <button id="title-filters-toggle" class="title-filters-toggle" type="button" aria-expanded="true" aria-controls="title-filters-body">
+      <span id="title-filters-label">Filtres</span>
+      <span id="title-filters-active" class="title-filters-active" aria-live="polite" hidden></span>
+      <span id="title-filters-overflow" class="title-filters-overflow" aria-hidden="true" hidden>Défiler ↕</span>
+      <span id="title-filters-chevron" class="title-filters-chevron" aria-hidden="true">▾</span>
+    </button>
+    <div id="title-filters-body" class="title-filters-body" role="region" aria-labelledby="title-filters-label">
+      <div id="title-filters-content" class="title-filters-content">
+        <div id="title-supplement-filters" class="focus-toggle supplement-toggle" role="group" aria-label="Filtres complémentaires" hidden></div>
+        <div id="header-legend" class="title-category-list" aria-label="Categories"></div>
+      </div>
+    </div>
+    <button id="title-clear-filters" class="clear-filters-button title-clear-filters" type="button" hidden>Supprimer les filtres</button>
 
     <div class="floating-content">
       <div class="floating-row">
