@@ -4958,5 +4958,25 @@
     "lien": "",
     "drone": "",
     "status": "Ongoing"
+  },
+  {
+    "date": "2026-11-18",
+    "lieu": "Odessa",
+    "lieu_en": "Odessa",
+    "journaliste": "Khrystyna Lysenko",
+    "journaliste_en": "Khrystyna Lysenko",
+    "type_violence": "Tué",
+    "type_violence_en": "Killed",
+    "description": "La productrice de la chaîne de télévision locale d’Odessa Pershy Myski, Khrystyna Lysenko, est tuée par des bombardements russes sur la ville alors qu’elle se rend à son travail. Il s’agit de la 17e victime parmi les professionnels des médias depuis le début de l’invasion à grande échelle en 2022.",
+    "description_en": "Khrystyna Lysenko, a producer for Pershy Myski, a local television channel in the city of Odessa, is killed by Russian airstrikes while on her way to work. She is the 17th media professional killed since the 2022 invasion.",
+    "compteur_evenements": 1,
+    "lat": 46.465529414469295,
+    "lng": 30.73855573733022,
+    "Oblast": "Odessa",
+    "Oblast_en": "Odessa",
+    "Geojson": "Odessa Oblast",
+    "lien": "",
+    "drone": "",
+    "status": ""
   }
 ]
